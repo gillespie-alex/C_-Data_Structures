@@ -15,5 +15,7 @@ int main()
 	ref->pfn_append(ref, 77777);
 	ref->pfn_append(ref, 88);
 
+	destructor(ref);
+
 	return 0;
 }
