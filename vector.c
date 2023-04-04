@@ -5,11 +5,14 @@ typedef struct vector{
 	// Refers to the address of the vector object itself
 	struct vector* self;
 	int* data;
-	int len;
+	size_t len;
 
 	void (*pfn_set)(struct vector*, size_t, int);
 	int (*pfn_get)(struct vector*, size_t);
-	void (*pfn_append)(struct vector*, int);
+
+	// Function to append to the end of the vector
+	//void (*pfn_append)(struct vector*, int);
+
 }vector_t;
 
 
@@ -52,21 +55,32 @@ vector_t* constructor(int* start_array, size_t length)
 	return new;
 }
 
+// Destructor to dispose of the used memory
+void destructor(vector_t* self)
+{
+	// This order is important
+	free(self->data);
+	free(self);
+}
+
 
 int main()
 {
-	printf("address of get function is %p\n", &get);
-	printf("address of get function is %p\n", get);
 	int arr1[] = {7,5,32,2,2,2,89,9,9,9};
-	//int arr1[] = {};
-	printf("size is %d \n", sizeof(arr1)/sizeof(arr1[0]));
+
 	vector_t* ref = constructor(arr1, sizeof(arr1)/sizeof(arr1[0]));
-	printf("Length of the array is %d\n", ref->len);
+
 	for(int i=0; i<ref->len; i++)
 		printf("%d ", ref->data[i]);
-	printf("\nThe new value after calling set function is\n");
+
+	ref->pfn_set(ref, 4, 100);
 	set(ref, 6, 800);
+	printf("\nAfter the newly set value\n");
 	for(int i=0; i<ref->len; i++)
 		printf("%d ", ref->data[i]);
 	return 0;
 }
+//	void (*pfn_set)(struct vector*, size_t, int);
+//	int (*pfn_get)(struct vector*, size_t);
+//	void (*pfn_append)(struct vector*, int);
+
