@@ -6,7 +6,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-
+// Vector structure similar to C++ vector and Python List
 typedef struct vector{
 	// Refers to the address of the vector object itself
 	struct vector* self;
@@ -21,14 +21,18 @@ typedef struct vector{
 
 }vector_t;
 
-void append(vector_t* self, int value);
-
-int get(vector_t* self, size_t index);
-
-void set(vector_t* self, size_t index, int value);
-
+// Constructor function
 vector_t* constructor(int* start_array, size_t length);
 
+void append(vector_t* self, int value);
+
+// Retreives a value from the vector object
+int get(vector_t* self, size_t index);
+
+// Sets a value in the vector object
+void set(vector_t* self, size_t index, int value);
+
+// Destructor function
 void destructor(vector_t* self);
 
 #endif
