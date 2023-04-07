@@ -1,21 +1,26 @@
-#include "vector.h"
+#include "Str.h"
+#define SIZE(x) (sizeof(x) / sizeof(x[0]))
 
 
 int main()
 {
-	int arr1[] = {7,5,32,2,2,2,89,9,9,9};
+    char my_str[] = "Hello";
+    string_t* new_str = Constructor(my_str, sizeof(my_str)/sizeof(my_str[0]));
+    new_str->pfn_print(new_str->self);
+    new_str->pfn_set(new_str->self, 2, (char)'Y');
+    new_str->pfn_print(new_str->self);
 
-	vector_t* ref = constructor(arr1, sizeof(arr1)/sizeof(arr1[0]));
+    printf("%c", new_str->pfn_get(new_str->self, 2));
+    // Out of Range
+    printf("%c", new_str->pfn_get(new_str->self, 90));
+    printf("\n");
 
-	// Testing the set operation
-	ref->pfn_set(ref, 4, 100);
+    // Appending
+    char temp[] = "abc";
+    new_str->pfn_plus(new_str->self, SIZE(temp), temp);
+    new_str->pfn_print(new_str->self);
+    printf("new size is %ld\n", new_str->str_len);
 
-	// Testing the append operation
-	ref->pfn_append(ref, 66666);
-	ref->pfn_append(ref, 77777);
-	ref->pfn_append(ref, 88);
-
-	destructor(ref);
-
-	return 0;
+    // Clear memory
+    Destructor(new_str);
 }
